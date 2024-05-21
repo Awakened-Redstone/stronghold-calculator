@@ -67,7 +67,11 @@ function App() {
     const [x2, z2, a2] = coords2.map(v => parseFloat(v));
 
     if (a1 === a2) {
-      return null;
+      return "The angles can't be the same";
+    }
+
+    if ([x1, z1, a1, x2, z2, a2].includes(NaN)) {
+      return "Please only inset valid numbers";
     }
 
     const x = (z1 - z2 + cot(a1) * x1 - cot(a2) * x2) / (cot(a1) - cot(a2));
@@ -110,8 +114,8 @@ function App() {
     try {
       const res = coords();
 
-      if (!res) {
-        setOutput(<ErrorMessage>The angles can't be the same</ErrorMessage>);
+      if (typeof res === "string") {
+        setOutput(<ErrorMessage>{res}</ErrorMessage>);
         return;
       }
 
@@ -154,24 +158,27 @@ function App() {
             label={"X coord:"}
             id={"x1"}
             value={coords1[0]}
-            onInput={(event: any) => {
-              setCoords1([event.value, coords1[1], coords1[2]])
+            onInput={event => {
+              const target = (event.target as HTMLInputElement)
+              setCoords1([target.value, coords1[1], coords1[2]])
             }}
           />
           <Input
             label={"Z coord:"}
             id={"z1"}
             value={coords1[1]}
-            onInput={(event: any) => {
-              setCoords1([coords1[0], event.value, coords1[2]])
+            onInput={event => {
+              const target = (event.target as HTMLInputElement)
+              setCoords1([coords1[0], target.value, coords1[2]])
             }}
           />
           <Input
             label={"Angle:"}
             id={"angle1"}
             value={coords1[2]}
-            onInput={(event: any) => {
-              setCoords1([coords1[0], coords1[1], event.value])
+            onInput={event => {
+              const target = (event.target as HTMLInputElement)
+              setCoords1([coords1[0], coords1[1], target.value])
             }}
           />
         </div>
@@ -180,24 +187,27 @@ function App() {
             label={"X coord:"}
             id={"x2"}
             value={coords2[0]}
-            onInput={(event: any) => {
-              setCoords2([event.value, coords2[1], coords2[2]])
+            onInput={event => {
+              const target = (event.target as HTMLInputElement)
+              setCoords2([target.value, coords2[1], coords2[2]])
             }}
           />
           <Input
             label={"Z coord:"}
             id={"z2"}
             value={coords2[1]}
-            onInput={(event: any) => {
-              setCoords2([coords2[0], event.value, coords2[2]])
+            onInput={event => {
+              const target = (event.target as HTMLInputElement)
+              setCoords2([coords2[0], target.value, coords2[2]])
             }}
           />
           <Input
             label={"Angle:"}
             id={"angle2"}
             value={coords2[2]}
-            onInput={(event: any) => {
-              setCoords2([coords2[0], coords2[1], event.value])
+            onInput={event => {
+              const target = (event.target as HTMLInputElement)
+              setCoords2([coords2[0], coords2[1], target.value])
             }}
           />
         </div>
