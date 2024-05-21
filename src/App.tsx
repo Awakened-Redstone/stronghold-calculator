@@ -41,7 +41,7 @@ const titles = [
   "Triangulator 3000",
 ];
 
-let timer: NodeJS.Timer | null = null;
+let timer: unknown | null = null;
 
 function degrees_to_radians(deg: number): number {
   return deg * (Math.PI / 180);
