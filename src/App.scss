@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@mixin text($r: 255, $g: $r, $b: $r) {
+  color: rgb($r, $g, $b);
+  text-shadow: .1em .1em rgb(calc($r / 4) calc($g / 4) calc($b / 4));
+}
+
+:root {
+  color-scheme: dark;
+  /*font-synthesis: none;*/
+  text-rendering: geometricPrecision;
+}
+
+#root {
+  width: 100%;
+  max-width: 1280px;
+  font-size: 1.6875rem;
+  @apply mx-auto;
+
+  font-family: Minecraft, Unifont, serif;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  border-style: none;
+  @include text;
+}
+
+*::selection {
+  color: rgb(31, 31, 255);
+  text-shadow: .1em .1em rgb(199, 199, 255);
+  background: white;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+
+  background-color: #1C1C1CD1;
+  background-image: url("/background.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+}
+
+h1 {
+  text-align: center;
+  margin: auto;
+  font-size: 2em;
+}
+
+label, .label {
+  @include text(160);
+}
+
+input, textarea, .mock-input {
+  color: rgb(var(--text) var(--text) var(--text));
+  border: #a0a0a0 solid 0.1875rem;
+  background: black;
+  outline: none;
+  padding-inline: 0.5625rem;
+}
+
+input:focus, textarea:focus, .mock-input:focus {
+  border-color: #fff;
+  outline: none;
+}
+
+button.copy {
+  content: '';
+  width: 6.5625rem;
+  height: 3.75rem;
+  top: -3.9375rem;
+  right: -0.1875rem;
+  background-image: url("/assets/copy.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+button.copy:hover {
+  background-image: url("/assets/copy-hover.png");
+}
+
+button.copy:disabled {
+  background-image: url("/assets/copy-disabled.png");
+}
+
+.inputs input, .inputs label {
+  display: block;
+}
+
+.title {
+  color: #a0a0a0;
+}
+
+.error {
+  @include text(255, 31, 31);
+}
+
+#credits-button {
+  position: absolute;
+  left: 0;
+  transition: 0.3s;
+  padding: 15px;
+  border-radius: 0 15px 15px 0;
+  background-color: #212123;
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+#credit-sidebar {
+  left: -100px;
+  width: 84px;
+  transition: 0.3s;
+  position: absolute;
+  background-color: #212123;
+  border-radius: 0 15px 15px 0;
+}
+
+#credits-button:hover + #credit-sidebar, #credit-sidebar:hover {
+  left: 0;
+}
+
+.credit-description {
+  display: none;
+}
+
+.credit:hover > .credit-description {
+  display: flex;
+  width: 18rem;
+  margin: 0 0 0 5.2rem;
+  align-items: center;
+  height: 4rem;
+
+  font-size: 24px;
+  position: absolute;
+}
+
+.pixel-perfect {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-size: 64px;
+
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+  image-rendering: optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+@font-face {
+  font-family: "Minecraft";
+  src: url("/font.woff2");
+}
+
+@font-face {
+  font-family: "Minecraft Large";
+  src: url("/font-large.woff");
+}
+
+@font-face {
+  font-family: "Unifont";
+  src: url("/unifont-15.1.05.otf");
+}
