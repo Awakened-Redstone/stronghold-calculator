@@ -1,4 +1,3 @@
-/* eslint-disable */
 import './App.scss'
 import React, {ReactNode, useCallback, useEffect, useState} from "react";
 
