@@ -1,5 +1,6 @@
+/* eslint-disable */
 import './App.scss'
-import React, {ReactNode, useCallback, useEffect, useMemo, useState} from "react";
+import React, {ReactNode, useCallback, useEffect, useState} from "react";
 
 function CreditItem({task, name}: { task: string, name: string }) {
   return (
@@ -153,7 +154,7 @@ function App() {
             label={"X coord:"}
             id={"x1"}
             value={coords1[0]}
-            onInput={event => {
+            onInput={(event: any) => {
               setCoords1([event.value, coords1[1], coords1[2]])
             }}
           />
@@ -161,7 +162,7 @@ function App() {
             label={"Z coord:"}
             id={"z1"}
             value={coords1[1]}
-            onInput={event => {
+            onInput={(event: any) => {
               setCoords1([coords1[0], event.value, coords1[2]])
             }}
           />
@@ -169,7 +170,7 @@ function App() {
             label={"Angle:"}
             id={"angle1"}
             value={coords1[2]}
-            onInput={event => {
+            onInput={(event: any) => {
               setCoords1([coords1[0], coords1[1], event.value])
             }}
           />
@@ -179,7 +180,7 @@ function App() {
             label={"X coord:"}
             id={"x2"}
             value={coords2[0]}
-            onInput={event => {
+            onInput={(event: any) => {
               setCoords2([event.value, coords2[1], coords2[2]])
             }}
           />
@@ -187,7 +188,7 @@ function App() {
             label={"Z coord:"}
             id={"z2"}
             value={coords2[1]}
-            onInput={event => {
+            onInput={(event: any) => {
               setCoords2([coords2[0], event.value, coords2[2]])
             }}
           />
@@ -195,7 +196,7 @@ function App() {
             label={"Angle:"}
             id={"angle2"}
             value={coords2[2]}
-            onInput={event => {
+            onInput={(event: any) => {
               setCoords2([coords2[0], coords2[1], event.value])
             }}
           />
