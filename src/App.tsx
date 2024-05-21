@@ -221,7 +221,6 @@ function App() {
               }
 
               const [x, z, netherX, netherZ] = res;
-              //Overworld: ${x.toFixed(0)}, ${z.toFixed(0)} | Nether: ${(x / 8).toFixed(0)}, ${(z / 8).toFixed(0)}
               navigator.clipboard.writeText(`Overworld: ${x}, ${z} | Nether: ${netherX}, ${netherZ}`);
             }}
           />
