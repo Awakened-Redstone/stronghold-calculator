@@ -70,7 +70,7 @@ function App() {
     }
 
     if ([x1, z1, a1, x2, z2, a2].includes(NaN)) {
-      return "Please only inset valid numbers";
+      return "Please only insert valid numbers";
     }
 
     const x = (z1 - z2 + cot(a1) * x1 - cot(a2) * x2) / (cot(a1) - cot(a2));
