@@ -42,8 +42,8 @@ const titles = [
 ];
 
 const constants = {
-  coord: ["X coord", "Y coord", "Angle"],
-  id: ["x", "y", "a"]
+  coord: ["X coord", "Z coord", "Angle"],
+  id: ["x", "z", "a"]
 }
 
 /*let timer: unknown | null = null;*/
