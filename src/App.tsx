@@ -42,7 +42,8 @@ const titles = [
 ];
 
 const constants = {
-  coord: ["X", "Y", "Z"]
+  coord: ["X coord", "Y coord", "Angle"],
+  id: ["x", "y", "a"]
 }
 
 /*let timer: unknown | null = null;*/
@@ -187,8 +188,8 @@ function App() {
                   !inputMode[i] ? coords.map((_, index) => {
                     return <Input
                       type={"text"}
-                      label={`${constants.coord[index]} coord:`}
-                      id={`${constants.coord[index]}${i}`}
+                      label={`${constants.coord[index]}:`}
+                      id={`${constants.id[index]}${i}`}
                       value={coords[index]}
                       onInput={event => {
                         const target = (event.target as HTMLInputElement)
