@@ -59,7 +59,7 @@ label, .label {
   @include text(160);
 }
 
-input, textarea, .mock-input {
+input[type="text"], textarea, .mock-input {
   color: rgb(var(--text) var(--text) var(--text));
   border: #a0a0a0 solid 0.1875rem;
   background: black;
@@ -67,9 +67,34 @@ input, textarea, .mock-input {
   padding-inline: 0.5625rem;
 }
 
-input:focus, textarea:focus, .mock-input:focus {
+input[type="text"]:focus, textarea:focus, .mock-input:focus {
   border-color: #fff;
   outline: none;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 3rem;
+  height: 3rem;
+  top: -3.9375rem;
+  right: -0.1875rem;
+  background-image: url("/assets/checkbox.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+input[type="checkbox"]:hover {
+  background-image: url("/assets/checkbox_highlighted.png");
+}
+
+input[type="checkbox"]:checked {
+  background-image: url("/assets/checkbox_selected.png");
+}
+
+input[type="checkbox"]:checked:hover {
+  background-image: url("/assets/checkbox_selected_highlighted.png");
 }
 
 button.copy {

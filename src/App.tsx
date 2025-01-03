@@ -10,12 +10,13 @@ function CreditItem({task, name}: { task: string, name: string }) {
   );
 }
 
-function Input({label, id, ...props}: {
-  label: string,
+function Input({label, id, large = false, ...props}: {
+  label: string
+  large?: boolean
   id: string
 } & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
   return (
-    <div className={"w-fit m-auto xl:mx-none"}>
+    <div className={`${large ? "xl:w-full" : "w-fit"} m-auto xl:mx-none`}>
       <label htmlFor={id}>{label}</label>
       <input id={id} pattern="-?[\d]+(\.[\d]+)?" required {...props}/>
     </div>
@@ -40,7 +41,11 @@ const titles = [
   "Triangulator 3000",
 ];
 
-let timer: unknown | null = null;
+const constants = {
+  coord: ["X", "Y", "Z"]
+}
+
+/*let timer: unknown | null = null;*/
 
 function degrees_to_radians(deg: number): number {
   return deg * (Math.PI / 180);
@@ -54,9 +59,10 @@ function cot(deg: number): number {
   return 1 / Math.tan(rad);
 }
 
-
 function App() {
   const [random] = useState(Math.round(Math.random() * (titles.length - 1)));
+  const [inputMode, setInputMode] = useState([false, false] as boolean[]);
+  const [advancedInput, setAdvancedInput] = useState(['', ''] as string[]);
   const [coords1, setCoords1] = useState(['', '', ''] as string[]);
   const [coords2, setCoords2] = useState(['', '', ''] as string[]);
   const [output, setOutput] = useState(<></>);
@@ -79,7 +85,7 @@ function App() {
     return [x.toFixed(0), z.toFixed(0), (x / 8).toFixed(0), (z / 8).toFixed(0)];
   }, [coords1, coords2]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (timer) return;
 
     navigator.clipboard.readText().then(() => {
@@ -102,7 +108,7 @@ function App() {
       }, 500);
     }).catch(() => {
     });
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     if (coords1.includes('') || coords2.includes('')) {
@@ -133,6 +139,14 @@ function App() {
     }
   }, [coords, coords1, coords2]);
 
+  const inputData: {
+    coords: string[];
+    setCoords: (value: (((prevState: string[]) => string[]) | string[])) => void
+  }[] = [
+    {coords: coords1, setCoords: setCoords1},
+    {coords: coords2, setCoords: setCoords2}
+  ]
+
   return (
     <>
       <div id="credits-button" className={"cursor-help top-8"}>Credits</div>
@@ -146,70 +160,68 @@ function App() {
       </div>
 
       <h1>{titles[random]}</h1>
-      <div className={"leading-none text-center text-xl"}>
+      {/*<div className={"leading-none text-center text-xl"}>
         <span className={"label"}>We use the clipboard for easy usage</span><br/>
         <span className={"label"}>Simply press F3 + C in Minecraft and come back</span>
-      </div>
+      </div>*/}
 
       <div className={"inputs"}>
-        <div className={"flex flex-wrap pt-12 gap-6 flex-col xl:flex-row justify-center w-full"}>
-          <Input
-            label={"X coord:"}
-            id={"x1"}
-            value={coords1[0]}
-            onInput={event => {
-              const target = (event.target as HTMLInputElement)
-              setCoords1([target.value, coords1[1], coords1[2]])
-            }}
-          />
-          <Input
-            label={"Z coord:"}
-            id={"z1"}
-            value={coords1[1]}
-            onInput={event => {
-              const target = (event.target as HTMLInputElement)
-              setCoords1([coords1[0], target.value, coords1[2]])
-            }}
-          />
-          <Input
-            label={"Angle:"}
-            id={"angle1"}
-            value={coords1[2]}
-            onInput={event => {
-              const target = (event.target as HTMLInputElement)
-              setCoords1([coords1[0], coords1[1], target.value])
-            }}
-          />
-        </div>
-        <div className={"flex flex-wrap pt-12 gap-6 flex-col xl:flex-row justify-center w-full"}>
-          <Input
-            label={"X coord:"}
-            id={"x2"}
-            value={coords2[0]}
-            onInput={event => {
-              const target = (event.target as HTMLInputElement)
-              setCoords2([target.value, coords2[1], coords2[2]])
-            }}
-          />
-          <Input
-            label={"Z coord:"}
-            id={"z2"}
-            value={coords2[1]}
-            onInput={event => {
-              const target = (event.target as HTMLInputElement)
-              setCoords2([coords2[0], target.value, coords2[2]])
-            }}
-          />
-          <Input
-            label={"Angle:"}
-            id={"angle2"}
-            value={coords2[2]}
-            onInput={event => {
-              const target = (event.target as HTMLInputElement)
-              setCoords2([coords2[0], coords2[1], target.value])
-            }}
-          />
-        </div>
+        {
+          inputData.map((vals, i) => {
+            const {coords, setCoords} = vals;
+            return (
+              <div className={"flex pt-12 gap-6 flex-col xl:flex-row justify-center w-full"}>
+                <div className={"flex flex-col items-center"}>
+                  <div className={"label"}>F3+C</div>
+                  <input
+                    type={"checkbox"} className={"pixel-perfect"}
+                    onChange={event => {
+                      const newValue = [...inputMode];
+                      newValue[i] = event.target.checked;
+                      console.log(newValue);
+                      setInputMode(newValue);
+                    }}
+                  />
+                </div>
+                {
+                  !inputMode[i] ? coords.map((_, index) => {
+                    return <Input
+                      type={"text"}
+                      label={`${constants.coord[index]} coord:`}
+                      id={`${constants.coord[index]}${i}`}
+                      value={coords[index]}
+                      onInput={event => {
+                        const target = (event.target as HTMLInputElement)
+                        const newCoords = [...coords];
+                        newCoords[index] = target.value;
+                        setCoords(newCoords);
+                      }}
+                    />
+                  }) : <Input
+                    large={true}
+                    type={"text"}
+                    label={"F3+C output:"}
+                    id={`f3c${i}`}
+                    value={advancedInput[i]}
+                    className={"w-full"}
+                    onInput={event => {
+                      const content = (event.target as HTMLInputElement).value
+
+                      const newValue = [...advancedInput];
+                      newValue[i] = content;
+                      setAdvancedInput(newValue);
+
+                      if (content.startsWith("/execute in minecraft:overworld run tp @s")) {
+                        const parts = content.substring(42).split(" ");
+                        setCoords([parts[0], parts[2], parts[3]]);
+                      }
+                    }}
+                  />
+                }
+              </div>
+            )
+          })
+        }
       </div>
       <div className={"mx-auto pt-16 inputs max-w-[95vw]"}>
         <label htmlFor={"output"}>Estimated position:</label>
